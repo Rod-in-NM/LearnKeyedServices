@@ -14,8 +14,7 @@ builder.Services.AddKeyedScoped<ICustomLogger, EventLogger>("event");
 builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<LoggingDbContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ProductionDbContext>(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 
 var app = builder.Build();
 
