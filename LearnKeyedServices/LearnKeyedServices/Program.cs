@@ -32,9 +32,28 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 });
 
+app.MapGet("/customlogger/file", ([FromKeyedServices("file")] ICustomLogger fileLogger) =>
+{
+    fileLogger.Log("This text is written to the file system.");
+    return Results.Ok("File logger executed successfully.");
+});
+
+app.MapGet("/customlogger/db", ([FromKeyedServices("database")] ICustomLogger databaseLogger) =>
+{
+    databaseLogger.Log("This text is stored in the database.");
+    return Results.Ok("Database logger executed successfully.");
+});
+
+app.MapGet("/customlogger/event", ([FromKeyedServices("event")] ICustomLogger logger) =>
+{
+    logger.Log("This text is recorded in the event system.");
+    return Results.Ok("Event logger executed successfully.");
+});
+
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
