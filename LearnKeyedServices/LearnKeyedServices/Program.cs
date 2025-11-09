@@ -10,6 +10,13 @@ builder.Services.AddKeyedScoped<ICustomLogger, EventLogger>("event");
 
 // Add services to the container.
 
+// I don't know why Kanjilal added Controllers here. There are no controllers in this project. But I'll follow his lead.
+builder.Services.AddControllers();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<LoggingDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
