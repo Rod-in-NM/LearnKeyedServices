@@ -1,4 +1,12 @@
+using LearnKeyedServices.Implementation;
+using LearnKeyedServices.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Register multiple services for the ICustomLogger interface with different keys
+builder.Services.AddKeyedScoped<ICustomLogger, FileLogger>("file");
+builder.Services.AddKeyedScoped<ICustomLogger, DatabaseLogger>("database");
+builder.Services.AddKeyedScoped<ICustomLogger, EventLogger>("event");
 
 // Add services to the container.
 
