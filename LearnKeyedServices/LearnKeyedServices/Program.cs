@@ -56,6 +56,8 @@ app.MapGet("/customlogger/event", ([FromKeyedServices("event")] ICustomLogger lo
     return Results.Ok("Event logger executed successfully.");
 });
 
+app.UseHttpsRedirection();  // Huh? HTTPS wasn't used when creating this app?
+app.MapControllers();
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
